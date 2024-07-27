@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Ingresso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerar Ingresso</h1>
+    <form id="form">
+        <label for="nome">Insira o nome:</label>
+        <input type="text" id="nome" required>
+        <br><br>
+        <label for="camarote">Camarote:</label>
+        <select id="camarote" required>
+            <option value="">Nenhum</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+        </select>
+        <br><br>
+        <button type="button" onclick="gerarIngresso()">Gerar Ingresso</button>
+    </form>
+    <div id="resultado" class="hidden">
+        <h2>Ingresso Gerado</h2>
+        <p id="ingressoInfo"></p>
+        <p>Código QR:</p>
+        <a id="linkQRCode" href="" target="_blank">
+            <img id="qrcode" src="" alt="QR Code">
+        </a>
+        <p>Código QR: <span id="codigoQRCode"></span></p>
+    </div>
+
+    <script>
+        function gerarCodigoAleatorio(tamanho) {
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let codigo = '';
+            for (let i = 0; i < tamanho; i++) {
+                const indice = Math.floor(Math.random() * caracteres.length);
+                codigo += caracteres[indice];
+            }
+            return codigo;
+        }
+
+        function gerarIngresso() {
+            const nome = document.getElementById('nome').value;
+            const camarote = document.getElementById('camarote').value;
+            const codigoAleatorio = gerarCodigoAleatorio(30);
+            const descricaoCamarote = camarote ? `Camarote de ${camarote}` : 'Pista';
+            const urlDestino = `http://www.seusite.com/ingresso.html?nome=${encodeURIComponent(nome)}&camarote=${encodeURIComponent(descricaoCamarote)}&codigo=${encodeURIComponent(codigoAleatorio)}`;
+            const qrCodeURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(urlDestino)}`;
+
+            document.getElementById('ingressoInfo').textContent = `Show Matue Rave Club - Ingresso Único\n${nome}\n${descricaoCamarote}\n`;
+            document.getElementById('qrcode').src = qrCodeURL;
+            document.getElementById('linkQRCode').href = qrCodeURL;
+            document.getElementById('codigoQRCode').textContent = qrCodeURL;
+            document.getElementById('resultado').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

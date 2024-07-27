@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .ingresso {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .ingresso h1 {
+            margin: 0;
+        }
+        .ingresso p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="ingresso">
+        <h1>SHOW DO MATUE - INGRESSO ÚNICO</h1>
+        <p id="nome"></p>
+        <p id="camarote"></p>
+        <p id="codigo"></p>
+    </div>
+
+    <script>
+        function obterParametro(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.getElementById('nome').textContent = 'Nome: ' + obterParametro('nome');
+        document.getElementById('camarote').textContent = 'Camarote: ' + obterParametro('camarote');
+        document.getElementById('codigo').textContent = 'Código: ' + obterParametro('codigo');
+    </script>
+</body>
+</html>
